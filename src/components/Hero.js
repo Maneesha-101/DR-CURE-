@@ -26,7 +26,7 @@ const Hero = () => {
       <div className="container">
         <div className="hero-content slide-in-left">
           <div className="breadcrumb">Home → Piles</div>
-          <h1 className="hero-title">Piles Treatment at Cure Care</h1>
+          <h1 className="hero-title">Piles Treatment at DR CURE </h1>
           <h2 className="hero-subtitle">Advanced Laser Surgery & Fast Recovery</h2>
           <p className="hero-description">
             These are a common yet often overlooked condition caused by swollen rectal tissues and veins. 

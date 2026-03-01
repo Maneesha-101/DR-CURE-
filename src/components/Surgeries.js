@@ -87,7 +87,7 @@ const Surgeries = () => {
       <div className="container">
         {/* Surgeries Section */}
         <div className="surgeries-section">
-          <h2 className="section-title">Cure Care Surgeries</h2>
+          <h2 className="section-title">DR CURE surgeries</h2>
           <p className="section-subtitle">Advanced surgical treatments with minimal invasion and faster recovery</p>
           
           <div className="surgeries-grid">
@@ -113,7 +113,7 @@ const Surgeries = () => {
 
         {/* Specialities Section */}
         <div className="specialities-section">
-          <h2 className="section-title">Our HeptaCare Specialities</h2>
+          <h2 className="section-title">Our DR CURE  Specialities</h2>
           <p className="section-subtitle">Comprehensive medical care across various specializations</p>
           
           <div className="specialities-grid">

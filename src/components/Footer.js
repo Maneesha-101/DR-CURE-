@@ -250,8 +250,8 @@ const Footer = () => {
         <div className="footer-content">
           <div className="footer-section">
             <div className="footer-logo">
-              <h3>CURE CARE</h3>
-              <h4>SURGERY</h4>
+              <h3>DR CURE </h3>
+              <h4>SURGERIES</h4>
 
               <p className="footer-tagline">Healing Hands, Caring Hearts</p>
             </div>

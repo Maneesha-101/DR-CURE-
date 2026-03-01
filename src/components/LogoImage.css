@@ -1,0 +1,103 @@
+/* src/components/LogoImage.css */
+
+/* Brand CSS Variables */
+:root {
+  --brand-purple: #7D008D;
+  --brand-orange: #FF7A00;
+  --brand-white: #FFFFFF;
+}
+
+.heading-cure {
+  color: var(--brand-purple);
+}
+
+.button-surgeries {
+  background-color: var(--brand-orange);
+  color: var(--brand-white);
+}
+
+.logo-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--brand-white);
+}
+
+.logo-image {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.logo-line {
+  display: flex;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+}
+
+.logo-letter-c, .logo-letter-s {
+  font-size: 32px;
+  color: var(--brand-white);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.logo-letter-s {
+  color: var(--brand-orange); /* Updated to Brand Orange */
+}
+
+.logo-divider {
+  font-size: 28px;
+  color: var(--brand-purple); /* Updated to Brand Purple */
+  margin: 0 5px;
+  font-weight: 300;
+}
+
+.logo-text-ure {
+  font-size: 28px;
+  color: var(--brand-orange); /* Updated to Brand Orange */
+  letter-spacing: 1px;
+}
+
+.logo-text-are {
+  font-size: 28px;
+  color: var(--brand-white); /* Updated to Brand White */
+  letter-spacing: 1px;
+}
+
+.logo-text-surgery {
+  font-size: 28px;
+  color: var(--brand-purple); /* Updated to Brand Purple */
+  letter-spacing: 1px;
+}
+
+.logo-tagline {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--brand-white); /* Updated to Brand White */
+  text-align: center;
+  margin-top: 5px;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .logo-letter-c, .logo-letter-s {
+    font-size: 24px;
+  }
+  
+  .logo-divider {
+    font-size: 22px;
+  }
+  
+  .logo-text-ure,
+  .logo-text-are,
+  .logo-text-surgery {
+    font-size: 22px;
+  }
+  
+  .logo-tagline {
+    font-size: 12px;
+  }
+}

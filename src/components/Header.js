@@ -1,494 +1,412 @@
-// src/components/Header.js
-import React, { useState, useRef, useEffect } from 'react';
-import './Header.css';
-import HeaderLogo from './HeaderLogo';
+import React, { useState, useEffect, useRef } from "react";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [showSearchResults, setShowSearchResults] = useState(false);
-  const [activeNav, setActiveNav] = useState('home');
-  const [scrolled, setScrolled] = useState(false);
-  const searchRef = useRef(null);
-  const navRef = useRef(null);
 
-  const searchData = {
-    diseases: [
-      { id: 1, name: 'Hemorrhoids', type: 'disease', category: 'Proctology' },
-      { id: 2, name: 'Fissure', type: 'disease', category: 'Proctology' },
-      { id: 3, name: 'Fistula', type: 'disease', category: 'Proctology' },
-      { id: 4, name: 'Gallstones', type: 'disease', category: 'Laparoscopy' },
-      { id: 5, name: 'Hernia', type: 'disease', category: 'Laparoscopy' },
-      { id: 6, name: 'Kidney Stones', type: 'disease', category: 'Urology' },
-      { id: 7, name: 'PCOS', type: 'disease', category: 'Gynecology' },
-      { id: 8, name: 'Obesity', type: 'disease', category: 'Weight Loss' },
-    ],
-    doctors: [
-      { id: 1, name: 'Dr. Sarah Johnson', specialty: 'Proctology Specialist', experience: '15 years' },
-      { id: 2, name: 'Dr. Michael Chen', specialty: 'Laparoscopic Surgeon', experience: '12 years' },
-      { id: 3, name: 'Dr. Emily Rodriguez', specialty: 'Urology Expert', experience: '18 years' },
-      { id: 4, name: 'Dr. Robert Kim', specialty: 'Gynecology Specialist', experience: '10 years' },
-      { id: 5, name: 'Dr. Lisa Thompson', specialty: 'Weight Loss Consultant', experience: '8 years' },
-    ],
-    services: [
-      { id: 1, name: 'Proctology', category: 'Laser Treatment' },
-      { id: 2, name: 'Laparoscopy', category: 'Minimal Access Surgery' },
-      { id: 3, name: 'Urology', category: 'Laser Lithotripsy' },
-      { id: 4, name: 'Gynecology', category: 'Women Wellness' },
-      { id: 5, name: 'Weight Loss', category: 'Bariatric Surgery' },
-    ]
-  };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [showResults, setShowResults] = useState(false);
+  const [activeNav, setActiveNav] = useState("home");
+  const [scrolled, setScrolled] = useState(false);
+
+  const searchRef = useRef(null);
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'services', label: 'Services' },
-    { id: 'doctors', label: 'Doctors' },
-    { id: 'contact', label: 'Contact' }
+    { id: "home", label: "Home" },
+    { id: "about", label: "About" },
+    { id: "services", label: "Services" },
+    { id: "doctors", label: "Doctors" },
+    { id: "contact", label: "Contact" }
+  ];
+
+  const searchData = [
+    "Hemorrhoids",
+    "Fissure",
+    "Fistula",
+    "Gallstones",
+    "Hernia",
+    "Kidney Stones",
+    "PCOS",
+    "Obesity"
   ];
 
   useEffect(() => {
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
     };
 
-    const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setShowSearchResults(false);
-      }
-      if (navRef.current && !navRef.current.contains(event.target) && isMenuOpen) {
-        setIsMenuOpen(false);
+    const handleClickOutside = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setShowResults(false);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    document.addEventListener('mousedown', handleClickOutside);
+    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isMenuOpen]);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    document.body.style.overflow = !isMenuOpen ? 'hidden' : 'auto';
-  };
+  }, []);
 
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-    document.body.style.overflow = 'auto';
-  };
+  const handleSearch = (e) => {
 
-  const performSearch = (query) => {
-    if (!query.trim()) {
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    if (!value) {
       setSearchResults([]);
       return;
     }
 
-    const lowerQuery = query.toLowerCase();
-    const results = [];
+    const results = searchData.filter((item) =>
+      item.toLowerCase().includes(value.toLowerCase())
+    );
 
-    searchData.diseases.forEach(disease => {
-      if (disease.name.toLowerCase().includes(lowerQuery)) {
-        results.push({
-          ...disease,
-          type: 'disease',
-          icon: '🩺',
-          action: () => handleDiseaseNavigation(disease)
-        });
-      }
-    });
-
-    searchData.doctors.forEach(doctor => {
-      if (doctor.name.toLowerCase().includes(lowerQuery) || 
-          doctor.specialty.toLowerCase().includes(lowerQuery)) {
-        results.push({
-          ...doctor,
-          type: 'doctor',
-          icon: '👨‍⚕️',
-          action: () => handleDoctorNavigation(doctor)
-        });
-      }
-    });
-
-    searchData.services.forEach(service => {
-      if (service.name.toLowerCase().includes(lowerQuery) || 
-          service.category.toLowerCase().includes(lowerQuery)) {
-        results.push({
-          ...service,
-          type: 'service',
-          icon: '💼',
-          action: () => handleServiceNavigation(service)
-        });
-      }
-    });
-
-    setSearchResults(results.slice(0, 5));
-    setShowSearchResults(results.length > 0);
+    setSearchResults(results);
+    setShowResults(true);
   };
 
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-    performSearch(value);
-  };
+  const navigate = (id) => {
 
-  const handleSearch = () => {
-    if (searchQuery.trim()) {
-      setIsSearching(true);
-      setTimeout(() => {
-        setIsSearching(false);
-        if (searchResults.length === 0) {
-          openModal('Search Results', `No results found for "${searchQuery}"`);
-          setSearchQuery('');
-        }
-      }, 500);
-    }
-  };
+    setActiveNav(id);
 
-  const handleSearchKeyPress = (e) => {
-    if (e.key === 'Enter') handleSearch();
-  };
+    const section = document.getElementById(id);
 
-  const handleClearSearch = () => {
-    setSearchQuery('');
-    setSearchResults([]);
-    setShowSearchResults(false);
-  };
-
-  const navigateToSection = (sectionId) => {
-    closeMenu();
-    setActiveNav(sectionId);
-    
-    const section = document.getElementById(sectionId);
     if (section) {
-      const headerHeight = document.querySelector('.header').offsetHeight;
-      const sectionTop = section.offsetTop - headerHeight;
-      
+
+      const headerHeight = document.querySelector(".header").offsetHeight;
+
+      const top = section.offsetTop - headerHeight;
+
       window.scrollTo({
-        top: sectionTop,
-        behavior: 'smooth'
+        top: top,
+        behavior: "smooth"
       });
-    } else {
-      // If section doesn't exist, show modal for now
-      if (sectionId === 'doctors' || sectionId === 'about') {
-        openModal(
-          sectionId === 'doctors' ? 'Our Doctors' : 'About Us',
-          sectionId === 'doctors' 
-            ? 'Meet our team of experienced medical professionals specializing in advanced laser surgery.'
-            : ' DR CURE provides advanced laser surgery with fast recovery across multiple cities.'
-        );
-      }
+
     }
+
   };
 
-  const handleDiseaseNavigation = (disease) => {
-    closeMenu();
-    setShowSearchResults(false);
-    openModal(disease.name, 
-      `Advanced Laser Treatment for ${disease.name}\n\n` +
-      '• Painless Procedure\n' +
-      '• Fast Recovery\n' +
-      '• Expert Medical Care\n' +
-      '• Available in 10+ Cities\n\n' +
-      'Book your free consultation today.'
-    );
+  const callNow = () => {
+    window.location.href = "tel:+919353937641";
   };
 
-  const handleDoctorNavigation = (doctor) => {
-    closeMenu();
-    setShowSearchResults(false);
-    openModal(doctor.name, 
-      `${doctor.name}\n` +
-      `${doctor.specialty}\n` +
-      `Experience: ${doctor.experience}\n\n` +
-      'Treating patients across:\n' +
-      '• 10+ Cities\n' +
-      '• 100+ Hospitals\n' +
-      '• 70k+ Happy Patients\n\n' +
-      'Available for free consultations.'
-    );
-  };
-
-  const handleServiceNavigation = (service) => {
-    closeMenu();
-    setShowSearchResults(false);
-    navigateToSection('services');
-  };
-
-  const openModal = (title, content) => {
-    const modal = document.createElement('div');
-    modal.className = 'header-modal';
-    modal.innerHTML = `
-      <div class="modal-overlay">
-        <div class="modal-container">
-          <div class="modal-header">
-            <h3 class="modal-title">${title}</h3>
-            <button class="modal-close">&times;</button>
-          </div>
-          <div class="modal-body">
-            <p>${content.replace(/\n/g, '<br>')}</p>
-          </div>
-          <div class="modal-footer">
-            <button class="modal-btn primary-btn">📅 Book Free Appointment</button>
-            <button class="modal-btn secondary-btn">Close</button>
-          </div>
-        </div>
-      </div>
-    `;
-
-    document.body.style.overflow = 'hidden';
-    document.body.appendChild(modal);
-
-    const overlay = modal.querySelector('.modal-overlay');
-    const closeBtn = modal.querySelector('.modal-close');
-    const secondaryBtn = modal.querySelector('.secondary-btn');
-    const primaryBtn = modal.querySelector('.primary-btn');
-
-    const closeModal = () => {
-      modal.remove();
-      document.body.style.overflow = 'auto';
-    };
-
-    overlay.onclick = (e) => {
-      if (e.target === overlay) closeModal();
-    };
-    closeBtn.onclick = closeModal;
-    secondaryBtn.onclick = closeModal;
-    primaryBtn.onclick = () => {
-      closeModal();
-      handleAppointmentClick();
-    };
-  };
-
-  const handleAppointmentClick = () => {
-    closeMenu();
-    openModal('Book Free Appointment', 
-      'Schedule Your Consultation Today!\n\n' +
-      '✓ Advanced Laser Surgery\n' +
-      '✓ Fast Recovery Process\n' +
-      '✓ Available in 10+ Cities\n' +
-      '✓ 100+ Hospitals Network\n' +
-      '✓ 70k+ Happy Patients\n' +
-      '✓ 50+ Diseases Treated\n\n' +
-      'Our team will contact you shortly.'
-    );
-  };
-
-  const handleEmergencyClick = () => {
-    const phoneNumber = '+91 9353937641';
-    if (window.confirm(`Call to Schedule Consultation?\n${phoneNumber}`)) {
-      window.location.href = `tel:${phoneNumber}`;
-    }
+  const bookAppointment = () => {
+    alert("Appointment booked! Our team will contact you.");
   };
 
   return (
-    <header className={`header ${scrolled ? 'scrolled' : ''}`} ref={navRef}>
+
+    <>
+    
+    <style>
+
+{`
+
+:root{
+--brand-purple:#7D008D;
+--brand-orange:#FF7A00;
+--brand-white:#ffffff;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:0 20px;
+}
+
+.header{
+position:fixed;
+top:0;
+width:100%;
+background:white;
+z-index:1000;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header-main{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:12px 0;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+}
+
+.logo span{
+color:var(--brand-orange);
+}
+
+.search-section{
+flex:1;
+max-width:380px;
+margin:0 20px;
+position:relative;
+}
+
+.search-input{
+width:100%;
+padding:10px;
+border:1px solid #ddd;
+border-radius:5px;
+}
+
+.search-btn{
+position:absolute;
+right:0;
+top:0;
+bottom:0;
+background:var(--brand-purple);
+border:none;
+color:white;
+padding:0 12px;
+cursor:pointer;
+}
+
+.search-results{
+background:white;
+border:1px solid #ddd;
+position:absolute;
+width:100%;
+top:42px;
+z-index:10;
+}
+
+.search-item{
+padding:10px;
+cursor:pointer;
+}
+
+.search-item:hover{
+background:#f5f5f5;
+}
+
+.actions{
+display:flex;
+gap:10px;
+}
+
+.call-btn{
+background:var(--brand-orange);
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.book-btn{
+background:var(--brand-purple);
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.navbar{
+border-top:1px solid #eee;
+}
+
+.nav-links{
+display:flex;
+justify-content:center;
+gap:30px;
+list-style:none;
+padding:10px 0;
+}
+
+.nav-links button{
+background:none;
+border:none;
+font-size:15px;
+cursor:pointer;
+}
+
+.active button{
+color:var(--brand-purple);
+font-weight:bold;
+}
+
+.mobile-btn{
+display:none;
+font-size:22px;
+border:none;
+background:none;
+}
+
+.mobile-menu{
+display:flex;
+flex-direction:column;
+background:white;
+}
+
+.mobile-menu button{
+padding:15px;
+border-bottom:1px solid #eee;
+background:none;
+border:none;
+}
+
+@media(max-width:900px){
+
+.search-section{
+display:none;
+}
+
+.actions{
+display:none;
+}
+
+.navbar{
+display:none;
+}
+
+.mobile-btn{
+display:block;
+}
+
+}
+
+`}
+
+    </style>
+
+    <header className="header">
+
       <div className="container">
+
         <div className="header-main">
-          {/* Logo Section */}
-          <div className="logo-wrapper">
-            <HeaderLogo />
+
+          <div className="logo">
+            DR CURE <span>SURGERIES</span>
           </div>
 
-          {/* Search Bar - Centered */}
           <div className="search-section" ref={searchRef}>
-            <div className="search-wrapper">
-              <input
-                type="text"
-                className="search-input"
-                placeholder="Search diseases, doctors..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                onKeyPress={handleSearchKeyPress}
-                onFocus={() => searchQuery && setShowSearchResults(true)}
-              />
-              {searchQuery && (
-                <button 
-                  className="clear-search-btn"
-                  onClick={handleClearSearch}
-                  aria-label="Clear search"
-                >
-                  ✕
-                </button>
-              )}
-              <button 
-                className="search-btn"
-                onClick={handleSearch}
-                disabled={isSearching}
-                aria-label="Search"
-              >
-                {isSearching ? '⏳' : '🔍'}
-              </button>
-            </div>
 
-            {showSearchResults && searchResults.length > 0 && (
-              <div className="search-results-dropdown">
-                <div className="search-results-list">
-                  {searchResults.map((result) => (
-                    <button
-                      key={`${result.type}-${result.id}`}
-                      className="search-result-item"
-                      onClick={() => {
-                        result.action();
-                        setShowSearchResults(false);
-                      }}
-                    >
-                      <span className="result-icon">{result.icon}</span>
-                      <div className="result-content">
-                        <div className="result-title">{result.name}</div>
-                        <div className="result-subtitle">{result.type === 'doctor' ? result.specialty : result.category}</div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+            <input
+              className="search-input"
+              placeholder="Search diseases..."
+              value={searchQuery}
+              onChange={handleSearch}
+            />
 
-          {/* Action Buttons */}
-          <div className="action-section">
-            <button 
-              className="emergency-btn"
-              onClick={handleEmergencyClick}
-            >
-              🆘 Call to Schedule
-            </button>
-            <button 
-              className="appointment-btn"
-              onClick={handleAppointmentClick}
-            >
-              📅 Book Free Appointment
-            </button>
-          </div>
+            <button className="search-btn">🔍</button>
 
+            {showResults && (
 
-          {/* Mobile Menu Button */}
-          <button 
-            className="mobile-menu-btn"
-            onClick={toggleMenu}
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={isMenuOpen}
-          >
-            <span className="menu-icon">{isMenuOpen ? '✕' : '☰'}</span>
-          </button>
-        </div>
+              <div className="search-results">
 
-        {/* Navigation Menu - Below main header */}
-        <nav className="navbar">
-          <ul className="nav-links">
-            {navItems.map((item) => (
-              <li key={item.id} className={`nav-item ${activeNav === item.id ? 'active' : ''}`}>
-                <button 
-                  className="nav-link-btn"
-                  onClick={() => navigateToSection(item.id)}
-                  aria-label={`Navigate to ${item.label}`}
-                >
-                  {item.label}
-                  {activeNav === item.id && <span className="active-indicator"></span>}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+                {searchResults.map((item, index) => (
 
-      {/* Mobile Navigation Overlay */}
-      <div className={`mobile-nav-overlay ${isMenuOpen ? 'active' : ''}`}>
-        <div className="mobile-nav-container">
-          <div className="mobile-nav-header">
-            <div className="mobile-logo">
-              <HeaderLogo />
-            </div>
-            <button 
-              className="mobile-close-btn"
-              onClick={closeMenu}
-              aria-label="Close menu"
-            >
-              ✕
-            </button>
-          </div>
-
-          {/* Mobile Search */}
-          <div className="mobile-search">
-            <div className="search-wrapper">
-              <input
-                type="text"
-                className="search-input"
-                placeholder="Search diseases, doctors..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                onKeyPress={handleSearchKeyPress}
-              />
-              <button 
-                className="search-btn"
-                onClick={handleSearch}
-                disabled={isSearching}
-                aria-label="Search"
-              >
-                {isSearching ? '⏳' : '🔍'}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Navigation Links */}
-          <nav className="mobile-nav">
-            <ul className="mobile-nav-links">
-              {navItems.map((item) => (
-                <li key={item.id} className={`mobile-nav-item ${activeNav === item.id ? 'active' : ''}`}>
-                  <button 
-                    className="mobile-nav-link"
-                    onClick={() => navigateToSection(item.id)}
+                  <div
+                    key={index}
+                    className="search-item"
+                    onClick={() => alert(item + " treatment page")}
                   >
-                    {item.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
+                    🩺 {item}
+                  </div>
 
-          {/* Mobile Stats from Image */}
-          <div className="mobile-stats">
-            <div className="stat-item">
-              <div className="stat-number">70k+</div>
-              <div className="stat-label">HAPPY PATIENTS</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-number">50+</div>
-              <div className="stat-label">DISEASES</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-number">100+</div>
-              <div className="stat-label">HOSPITALS</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-number">10+</div>
-              <div className="stat-label">CITIES</div>
-            </div>
+                ))}
+
+              </div>
+
+            )}
+
           </div>
 
-          {/* Mobile Action Buttons */}
-          <div className="mobile-action-buttons">
-            <button 
-              className="mobile-appointment-btn"
-              onClick={handleAppointmentClick}
+          <div className="actions">
+
+            <button
+              className="call-btn"
+              onClick={callNow}
             >
-              📅 Book Free Appointment
+              🆘 Call
             </button>
-            <button 
-              className="mobile-emergency-btn"
-              onClick={handleEmergencyClick}
+
+            <button
+              className="book-btn"
+              onClick={bookAppointment}
             >
-              🆘 Call to Schedule Consultation
+              📅 Book Appointment
             </button>
+
           </div>
+
+          <button
+            className="mobile-btn"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? "✕" : "☰"}
+          </button>
+
         </div>
+
+        <nav className="navbar">
+
+          <ul className="nav-links">
+
+            {navItems.map((item) => (
+
+              <li
+                key={item.id}
+                className={activeNav === item.id ? "active" : ""}
+              >
+
+                <button onClick={() => navigate(item.id)}>
+                  {item.label}
+                </button>
+
+              </li>
+
+            ))}
+
+          </ul>
+
+        </nav>
+
       </div>
+
+      {isMenuOpen && (
+
+        <div className="mobile-menu">
+
+          {navItems.map((item) => (
+
+            <button
+              key={item.id}
+              onClick={() => {
+                navigate(item.id);
+                setIsMenuOpen(false);
+              }}
+            >
+              {item.label}
+            </button>
+
+          ))}
+
+        </div>
+
+      )}
+
     </header>
+
+    </>
   );
+
 };
 
 export default Header;

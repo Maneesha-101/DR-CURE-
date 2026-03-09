@@ -1,6 +1,4 @@
-// src/components/Footer.js
 import React, { useState } from 'react';
-import './Footer.css';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -20,7 +18,7 @@ const Footer = () => {
   const scrollToSection = (sectionClass) => {
     const element = document.querySelector(`.${sectionClass}`);
     if (element) {
-      const headerOffset = 80; // Adjust based on your header height
+      const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
       
@@ -28,62 +26,41 @@ const Footer = () => {
         top: offsetPosition,
         behavior: 'smooth'
       });
-    } else {
-      console.warn(`Section with class "${sectionClass}" not found`);
     }
   };
 
   // Open modal function
   const openModal = (title, content = 'This content would be displayed in a modal.') => {
-    // Create modal element
     const modal = document.createElement('div');
     modal.className = 'footer-modal';
     modal.innerHTML = `
       <div class="modal-content">
         <div class="modal-header">
-          <h3>${title}</h3>
-          <button class="modal-close">&times;</button>
+          <h3 style="margin:0; color:#7D008D;">${title}</h3>
+          <button class="modal-close">×</button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="margin-top:15px; line-height:1.6; color:#333;">
           <p>${content}</p>
         </div>
       </div>
     `;
 
-    // Add styles
     modal.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); display: flex; align-items: center;
+      justify-content: center; z-index: 9999; font-family: sans-serif;
     `;
 
     const modalContent = modal.querySelector('.modal-content');
     modalContent.style.cssText = `
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      max-width: 500px;
-      width: 90%;
-      position: relative;
+      background: white; padding: 2rem; border-radius: 12px;
+      max-width: 500px; width: 90%; position: relative;
     `;
 
-    // Add close functionality
     const closeBtn = modal.querySelector('.modal-close');
     closeBtn.style.cssText = `
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
+      position: absolute; top: 1rem; right: 1rem; background: none;
+      border: none; font-size: 1.8rem; cursor: pointer; color: #666;
     `;
 
     closeBtn.onclick = () => {
@@ -98,28 +75,36 @@ const Footer = () => {
       }
     };
 
-    // Add to document
     document.body.style.overflow = 'hidden';
     document.body.appendChild(modal);
   };
 
-  // Open doctors page
-  const openDoctorsPage = () => {
-    openModal('Our Doctors', 
-      'Meet our team of experienced medical professionals:<br><br>' +
-      '• Dr. Sarah Johnson - Proctology Specialist<br>' +
-      '• Dr. Michael Chen - Laparoscopic Surgeon<br>' +
-      '• Dr. Emily Rodriguez - Urology Expert<br>' +
-      '• Dr. Robert Kim - Gynecology Specialist<br>' +
-      '• Dr. Lisa Thompson - Weight Loss Consultant'
-    );
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
+      setSubscriptionMessage('Please enter a valid email');
+      setTimeout(() => setSubscriptionMessage(''), 3000);
+      return;
+    }
+    
+    setIsSubscribed(true);
+    setSubscriptionMessage('Subscribing...');
+    
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setSubscriptionMessage(`Subscribed: ${email}`);
+    setEmail('');
+    
+    setTimeout(() => {
+      setSubscriptionMessage('');
+      setIsSubscribed(false);
+    }, 5000);
   };
 
   const quickLinks = [
     { label: 'Home', action: scrollToTop },
-    { label: 'About Us', action: () => openModal('About Us', 'Cure  is a leading medical facility dedicated to providing comprehensive healthcare services with state-of-the-art technology and compassionate care.') },
+    { label: 'About Us', action: () => openModal('About Us', 'Cure Surgeries is a leading medical facility dedicated to providing comprehensive healthcare services.') },
     { label: 'Services', action: () => scrollToSection('services-section') },
-    { label: 'Doctors', action: openDoctorsPage },
+    { label: 'Doctors', action: () => openModal('Our Doctors', 'Our team includes specialists in Proctology, Laparoscopy, and Urology.') },
     { label: 'Contact', action: () => scrollToSection('contact-section') }
   ];
 
@@ -131,272 +116,278 @@ const Footer = () => {
     { name: 'Weight Loss', desc: 'Medical weight management programs' }
   ];
 
-  const contactInfo = [
-    { 
-      icon: '📍', 
-      text: 'P867+PFP, Krishna Nagar, Maharani Peta, Visakhapatnam, Andhra Pradesh 530002',
-      action: () => {
-        window.open('https://maps.app.goo.gl/Y7RCAnb5PivBPH1bA?g_st=awb', '_blank');
-      }
-    },
-    { 
-      icon: '📞', 
-      text: '+91 9353937641',
-      action: () => {
-        if (window.confirm('Call +91 9353937641?')) {
-          window.location.href = 'tel:+91 9353937641';
-        }
-      }
-    },
-    { 
-      icon: '✉️', 
-      text: 'drcuresurgeries@gmail.com',
-      action: () => {
-        window.location.href = 'mailto:curecaresurgery@gmail.com?subject=Inquiry%20from%20Website&body=Hello%20Heptacare%20Health,';
-      }
-    }
-  ];
-
-  const socialPlatforms = [
-    { icon: '📘', label: 'Facebook', url: 'https://facebook.com/heptacarehealth' },
-    { icon: '🐦', label: 'Twitter', url: 'https://twitter.com/heptacarehealth' },
-    { icon: '📷', label: 'Instagram', url: 'https://instagram.com/heptacarehealth' },
-    { icon: '💼', label: 'LinkedIn', url: 'https://linkedin.com/company/heptacarehealth' }
-  ];
-
-  const footerLinks = [
-    { 
-      label: 'Privacy Policy', 
-      action: () => openModal('Privacy Policy', 
-        'Your privacy is important to us. This privacy policy explains how we collect, use, and protect your personal information.') 
-    },
-    { 
-      label: 'Terms & Conditions', 
-      action: () => openModal('Terms & Conditions',
-        'By using our services, you agree to our terms and conditions. Please read them carefully.') 
-    },
-    { 
-      label: 'Sitemap', 
-      action: () => openModal('Sitemap',
-        'Website Structure:<br><br>' +
-        '• Homepage<br>' +
-        '• About Us<br>' +
-        '• Services<br>' +
-        '• Doctors<br>' +
-        '• Contact<br>' +
-        '• Patient Portal<br>' +
-        '• Resources') 
-    }
-  ];
-
-  const handleSubscribe = async (e) => {
-    e.preventDefault();
-    
-    if (!email.trim()) {
-      setSubscriptionMessage('Please enter your email address');
-      setTimeout(() => setSubscriptionMessage(''), 3000);
-      return;
-    }
-    
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setSubscriptionMessage('Please enter a valid email address');
-      setTimeout(() => setSubscriptionMessage(''), 3000);
-      return;
-    }
-    
-    // Simulate API call
-    setIsSubscribed(true);
-    setSubscriptionMessage('Subscribing...');
-    
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Store in localStorage to simulate persistence
-      const subscriptions = JSON.parse(localStorage.getItem('newsletterSubscriptions') || '[]');
-      subscriptions.push({
-        email: email,
-        date: new Date().toISOString()
-      });
-      localStorage.setItem('newsletterSubscriptions', JSON.stringify(subscriptions));
-      
-      setSubscriptionMessage(`Thank you for subscribing with: ${email}`);
-      setEmail('');
-      
-      // Reset after 5 seconds
-      setTimeout(() => {
-        setSubscriptionMessage('');
-        setIsSubscribed(false);
-      }, 5000);
-      
-    } catch (error) {
-      setSubscriptionMessage('Subscription failed. Please try again.');
-      setIsSubscribed(false);
-      setTimeout(() => setSubscriptionMessage(''), 3000);
-    }
-  };
-
-  // Copy to clipboard function
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text).then(() => {
-      const originalMessage = subscriptionMessage;
-      setSubscriptionMessage('Copied to clipboard!');
-      setTimeout(() => setSubscriptionMessage(originalMessage), 2000);
-    });
-  };
-
   return (
-    <footer className="footer" id="footer">
-      <div className="container">
-        <div className="footer-content">
-          <div className="footer-section">
-            <div className="footer-logo">
-              <h3>DR CURE </h3>
-              <h4>SURGERIES</h4>
+    <>
+      <style>
+        {`
+          :root {
+            --brand-purple: #7D008D;
+            --brand-orange: #FF7A00;
+            --brand-white: #FFFFFF;
+            --footer-dark: #3a0041;
+          }
 
-              <p className="footer-tagline">Healing Hands, Caring Hearts</p>
+          .footer {
+            background: linear-gradient(135deg, var(--brand-purple) 0%, var(--footer-dark) 100%);
+            color: #e2e8f0;
+            padding: 4rem 0 2rem;
+            border-top: 4px solid var(--brand-orange);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          }
+
+          .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+          }
+
+          .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+          }
+
+          .footer-logo h3 {
+            color: var(--brand-white);
+            font-size: 1.8rem;
+            margin: 0 0 0.2rem 0;
+            font-weight: bold;
+          }
+
+          .footer-logo h4 {
+            color: var(--brand-white);
+            margin: 0 0 1rem 0;
+            letter-spacing: 2px;
+          }
+
+          .footer-tagline {
+            color: var(--brand-orange);
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+          }
+
+          .footer-description {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #cbd5e0;
+            font-size: 0.95rem;
+          }
+
+          .footer-heading {
+            color: var(--brand-orange);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(255, 122, 0, 0.3);
+            font-weight: 600;
+          }
+
+          .social-links {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1rem;
+          }
+
+          .social-link {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
+          }
+
+          .social-link:hover {
+            background: var(--brand-orange);
+            transform: translateY(-2px);
+          }
+
+          .footer-links {
+            list-style: none; padding: 0; margin: 0;
+          }
+
+          .footer-links li { margin-bottom: 0.8rem; }
+
+          .footer-link-btn {
+            background: none; border: none; color: #cbd5e0;
+            cursor: pointer; padding: 0.2rem 0; text-align: left;
+            width: 100%; font-size: 1rem; transition: all 0.3s ease;
+          }
+
+          .footer-link-btn:hover {
+            color: var(--brand-orange);
+            padding-left: 8px;
+          }
+
+          .contact-info {
+            list-style: none; padding: 0; margin: 0;
+          }
+
+          .contact-item {
+            display: flex; align-items: flex-start;
+            margin-bottom: 1rem; gap: 0.8rem;
+          }
+
+          .contact-link {
+            background: none; border: none; color: #cbd5e0;
+            cursor: pointer; text-align: left; padding: 0;
+            display: flex; gap: 0.5rem; font-size: 0.9rem;
+            line-height: 1.4; transition: color 0.3s;
+          }
+
+          .contact-link:hover { color: var(--brand-orange); }
+
+          .contact-icon { color: var(--brand-orange); font-size: 1.1rem; }
+
+          .newsletter-form {
+            display: flex; gap: 0.5rem; margin-top: 1rem;
+          }
+
+          .newsletter-form input {
+            flex: 1; padding: 0.6rem; border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05); color: white;
+          }
+
+          .newsletter-form button {
+            background: var(--brand-orange); color: white;
+            border: none; padding: 0 1rem; border-radius: 4px; cursor: pointer;
+          }
+
+          .footer-bottom {
+            padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 1rem;
+          }
+
+          .copyright { color: #a0aec0; font-size: 0.85rem; }
+
+          .back-to-top {
+            background: rgba(255, 255, 255, 0.1); color: white;
+            border: none; padding: 0.5rem 1rem; border-radius: 4px;
+            cursor: pointer; font-size: 0.85rem; transition: 0.3s;
+          }
+
+          .back-to-top:hover { background: var(--brand-orange); }
+
+          .subscription-message {
+            font-size: 0.8rem; margin-top: 5px; color: var(--brand-orange);
+          }
+
+          @media (max-width: 768px) {
+            .footer-content { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+          }
+        `}
+      </style>
+
+      <footer className="footer">
+        <div className="footer-container">
+          <div className="footer-content">
+            {/* Branding Section */}
+            <div className="footer-section">
+              <div className="footer-logo">
+                <h3>DR CURE</h3>
+                <h4>SURGERIES</h4>
+                <p className="footer-tagline">Healing Hands, Caring Hearts</p>
+              </div>
+              <p className="footer-description">
+                Advanced medical care with compassion and cutting-edge technology. 
+                Your health is our priority.
+              </p>
+              <div className="social-links">
+                {['📘', '🐦', '📷', '💼'].map((icon, i) => (
+                  <button key={i} className="social-link" onClick={() => window.open('#', '_blank')}>
+                    {icon}
+                  </button>
+                ))}
+              </div>
             </div>
-            <p className="footer-description">
-              Advanced medical care with compassion and cutting-edge technology. 
-              Your health is our priority.
-            </p>
-            <div className="social-links">
-              {socialPlatforms.map((platform, index) => (
-                <button 
-                  key={index} 
-                  className="social-link"
-                  onClick={() => window.open(platform.url, '_blank')}
-                  aria-label={`Follow us on ${platform.label}`}
-                  title={platform.label}
-                >
-                  {platform.icon}
-                </button>
-              ))}
-            </div>
-          </div>
-          
-          <div className="footer-section">
-            <h4 className="footer-heading">Quick Links</h4>
-            <ul className="footer-links">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
-                  <button 
-                    className="footer-link-btn"
-                    onClick={link.action}
-                    aria-label={`Navigate to ${link.label}`}
-                  >
-                    {link.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div className="footer-section">
-            <h4 className="footer-heading">Our Services</h4>
-            <ul className="footer-links">
-              {services.map((service, index) => (
-                <li key={index}>
-                  <button 
-                    className="footer-link-btn"
-                    onClick={() => openModal(service.name, service.desc)}
-                    aria-label={`Learn more about ${service.name}`}
-                  >
-                    {service.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div className="footer-section">
-            <h4 className="footer-heading">Contact Info</h4>
-            <ul className="contact-info">
-              {contactInfo.map((contact, index) => (
-                <li key={index} className="contact-item">
-                  <button 
-                    className="contact-link"
-                    onClick={contact.action}
-                    aria-label={contact.icon === '📍' ? 'Open location in Google Maps' : 
-                               contact.icon === '📞' ? 'Call us' : 
-                               'Send us an email'}
-                  >
-                    <span className="contact-icon">{contact.icon}</span>
-                    <span>{contact.text}</span>
-                  </button>
-                  {contact.icon === '📍' && (
-                    <button 
-                      className="copy-btn"
-                      onClick={() => copyToClipboard(contact.text)}
-                      aria-label="Copy address to clipboard"
-                      title="Copy address"
-                    >
-                      📋
+
+            {/* Links Section */}
+            <div className="footer-section">
+              <h4 className="footer-heading">Quick Links</h4>
+              <ul className="footer-links">
+                {quickLinks.map((link, index) => (
+                  <li key={index}>
+                    <button className="footer-link-btn" onClick={link.action}>
+                      {link.label}
                     </button>
-                  )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Services Section */}
+            <div className="footer-section">
+              <h4 className="footer-heading">Our Services</h4>
+              <ul className="footer-links">
+                {services.map((service, index) => (
+                  <li key={index}>
+                    <button className="footer-link-btn" onClick={() => openModal(service.name, service.desc)}>
+                      {service.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact Section */}
+            <div className="footer-section">
+              <h4 className="footer-heading">Contact Info</h4>
+              <ul className="contact-info">
+                <li className="contact-item">
+                  <button className="contact-link" onClick={() => window.open('https://maps.google.com', '_blank')}>
+                    <span className="contact-icon">📍</span>
+                    <span>Krishna Nagar, Maharani Peta, Visakhapatnam, AP 530002</span>
+                  </button>
                 </li>
-              ))}
-            </ul>
-            
-            <div className="newsletter">
-              <h5>Subscribe to Newsletter</h5>
+                <li className="contact-item">
+                  <button className="contact-link" onClick={() => window.location.href = 'tel:+919353937641'}>
+                    <span className="contact-icon">📞</span>
+                    <span>+91 9353937641</span>
+                  </button>
+                </li>
+                <li className="contact-item">
+                  <button className="contact-link" onClick={() => window.location.href = 'mailto:drcuresurgeries@gmail.com'}>
+                    <span className="contact-icon">✉️</span>
+                    <span>drcuresurgeries@gmail.com</span>
+                  </button>
+                </li>
+              </ul>
+              
               <form className="newsletter-form" onSubmit={handleSubscribe}>
                 <input 
                   type="email" 
-                  name="email"
                   placeholder="Your email" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  required
-                  aria-label="Email for newsletter subscription"
                   disabled={isSubscribed}
-                  className={subscriptionMessage ? 'has-message' : ''}
                 />
-                <button 
-                  type="submit" 
-                  aria-label={isSubscribed ? 'Subscribed successfully' : 'Subscribe to newsletter'}
-                  disabled={isSubscribed}
-                  className={isSubscribed ? 'subscribed' : ''}
-                >
+                <button type="submit" disabled={isSubscribed}>
                   {isSubscribed ? '✓' : '→'}
                 </button>
               </form>
-              {subscriptionMessage && (
-                <div className="subscription-message">
-                  {subscriptionMessage}
-                </div>
-              )}
+              {subscriptionMessage && <div className="subscription-message">{subscriptionMessage}</div>}
             </div>
           </div>
-        </div>
-        
-        <div className="footer-bottom">
-          <p className="copyright">
-            &copy; {currentYear} DR CURE . All rights reserved.
-          </p>
-          <div className="footer-bottom-links">
-            {footerLinks.map((link, index) => (
-              <React.Fragment key={index}>
-                <button 
-                  className="footer-bottom-link"
-                  onClick={link.action}
-                  aria-label={`Open ${link.label}`}
-                >
-                  {link.label}
-                </button>
-                {index < footerLinks.length - 1 && <span className="separator">|</span>}
-              </React.Fragment>
-            ))}
+
+          <div className="footer-bottom">
+            <p className="copyright">
+              © {currentYear} DR CURE. All rights reserved.
+            </p>
+            <div style={{display:'flex', gap:'15px'}}>
+               <button className="footer-link-btn" style={{fontSize:'0.85rem'}} onClick={() => openModal('Privacy Policy', 'Details about your privacy...')}>Privacy</button>
+               <button className="footer-link-btn" style={{fontSize:'0.85rem'}} onClick={() => openModal('Terms', 'Our terms and conditions...')}>Terms</button>
+            </div>
+            <button className="back-to-top" onClick={scrollToTop}>
+              ↑ Back to Top
+            </button>
           </div>
-          <button 
-            className="back-to-top"
-            onClick={scrollToTop}
-            aria-label="Scroll back to top"
-          >
-            ↑ Back to Top
-          </button>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 };
 

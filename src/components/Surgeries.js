@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from "react";
 
 const Surgeries = () => {
-  const [showAllSurgeries, setShowAllSurgeries] = useState(false);
+
+  const [showAllSurgeries] = useState(false);
+  const [selectedSurgery, setSelectedSurgery] = useState(null);
 
   const surgeries = [
     { id: 1, name: "Piles", icon: "🩸", category: "proctology" },
@@ -19,364 +21,231 @@ const Surgeries = () => {
     { id: 12, name: "Knee Replacement", icon: "🦵", category: "orthopedics" }
   ];
 
-  const specialities = [
-    {
-      id: 1,
-      title: "Proctology",
-      description:
-        "You are treated with Specialised & advanced treatment for Anorectal Diseases.",
-      icon: "🩺",
-      color: "#0d4d8d"
-    },
-    {
-      id: 2,
-      title: "Weight Loss",
-      description:
-        "Gastric balloon & Bariatric Surgery (Scientific proven & advanced techniques).",
-      icon: "⚖️",
-      color: "#ff6b35"
-    },
-    {
-      id: 3,
-      title: "Vascular",
-      description:
-        "A surgical subspecialty that deals with the vascular system...",
-      icon: "🩸",
-      color: "#1a6fb3"
-    },
-    {
-      id: 4,
-      title: "Aesthetics",
-      description:
-        "Retouching or enhancing of natural corporeal appearance...",
-      icon: "✨",
-      color: "#ff8b35"
-    },
-    {
-      id: 5,
-      title: "Orthopedics",
-      description:
-        "Pediatric Orthopedic Hand and Upper Extremity Surgery",
-      icon: "🦴",
-      color: "#0d4d8d"
-    },
-    {
-      id: 6,
-      title: "ENT",
-      description:
-        "Minimally invasive surgery for ear, nose and throat.",
-      icon: "👂",
-      color: "#1a6fb3"
-    }
-  ];
-
-  const visibleSurgeries = showAllSurgeries
-    ? surgeries
-    : surgeries.slice(0, 8);
+  const visibleSurgeries = showAllSurgeries ? surgeries : surgeries.slice(0,8);
 
   const handleSurgeryClick = (surgery) => {
-    alert(
-      `Selected: ${surgery.name}\n\nWould you like to learn more about ${surgery.name} surgery?`
-    );
+
+    setSelectedSurgery(surgery);
+
+    setTimeout(()=>{
+
+      const section = document.getElementById("surgery-info");
+
+      if(section){
+        section.scrollIntoView({behavior:"smooth"});
+      }
+
+    },100);
+
   };
 
-  const handleViewMore = () => {
-    setShowAllSurgeries(!showAllSurgeries);
-  };
 
-  const handleSpecialityClick = () => {
-    const formSection = document.querySelector(".consultation");
-    if (formSection) {
-      formSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
-  useEffect(() => {
+  useEffect(()=>{
+
     const style = document.createElement("style");
+
     style.innerHTML = `
-    
-    :root {
-      --brand-purple: #7D008D;
-      --brand-orange: #FF7A00;
-      --brand-white: #FFFFFF;
+
+    :root{
+      --brand-purple:#7D008D;
+      --brand-orange:#FF7A00;
     }
 
-    .surgeries {
-      background-color: var(--brand-white);
-      padding: 80px 20px;
+    .surgeries{
+      padding:80px 20px;
+      background:#fff;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: auto;
+    .container{
+      max-width:1200px;
+      margin:auto;
     }
 
-    .surgeries-section,
-    .specialities-section {
-      margin-bottom: 80px;
+    .section-title{
+      text-align:center;
+      font-size:34px;
+      color:var(--brand-purple);
+      margin-bottom:10px;
+      font-weight:700;
     }
 
-    .surgeries-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 20px;
-      margin-bottom: 40px;
+    .section-subtitle{
+      text-align:center;
+      color:#666;
+      margin-bottom:40px;
     }
 
-    .surgery-card {
-      background: #f8f9fa;
-      border-radius: 12px;
-      padding: 25px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    /* AUTO SCROLL AREA */
+
+    .surgeries-scroll{
+      overflow:hidden;
+      position:relative;
+      margin-bottom:40px;
     }
 
-    .surgery-card:hover {
-      transform: translateY(-8px);
-      border-color: var(--brand-purple);
-      background: var(--brand-white);
-      box-shadow: 0 10px 25px rgba(125, 0, 141, 0.1);
+    .surgeries-track{
+      display:flex;
+      gap:20px;
+      animation:scroll 40s linear infinite;
     }
 
-    .surgery-icon {
-      font-size: 40px;
-      margin-bottom: 15px;
-      width: 70px;
-      height: 70px;
-      background: var(--brand-white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    .surgeries-track:hover{
+      animation-play-state:paused;
     }
 
-    .surgery-name {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--brand-purple);
-      margin-bottom: 8px;
+    @keyframes scroll{
+      0%{transform:translateX(0)}
+      100%{transform:translateX(-50%)}
     }
 
-    .surgery-category {
-      font-size: 12px;
-      font-weight: 500;
-      color: #666;
-      padding: 4px 12px;
-      background: #f3e6f5;
-      border-radius: 20px;
-      text-transform: capitalize;
+    .surgery-card{
+      min-width:220px;
+      background:#f8f9fa;
+      padding:25px;
+      border-radius:12px;
+      text-align:center;
+      cursor:pointer;
+      transition:0.3s;
     }
 
-    .view-more-container {
-      text-align: center;
+    .surgery-card:hover{
+      transform:translateY(-8px);
+      border:2px solid var(--brand-purple);
     }
 
-    .view-more-btn {
-      background: none;
-      border: none;
-      color: var(--brand-orange);
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 16px;
-      transition: 0.3s ease;
+    .surgery-icon{
+      font-size:40px;
+      margin-bottom:10px;
     }
 
-    .view-more-btn:hover {
-      color: var(--brand-purple);
+    .surgery-name{
+      font-weight:600;
+      color:var(--brand-purple);
     }
 
-    /* Specialities */
-
-    .specialities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 30px;
+    .surgery-category{
+      font-size:12px;
+      color:#666;
     }
 
-    .speciality-card {
-      background: #f8f9fa;
-      border-radius: 15px;
-      padding: 30px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-      position: relative;
-      overflow: hidden;
+    .view-more-container{
+      text-align:center;
+      margin-bottom:70px;
     }
 
-    .speciality-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 5px;
-      height: 100%;
-      background-color: var(--speciality-color, var(--brand-purple));
-      transition: width 0.3s ease;
+    .view-more-btn{
+      border:none;
+      background:none;
+      color:var(--brand-orange);
+      font-size:16px;
+      cursor:pointer;
+      font-weight:600;
     }
 
-    .speciality-card:hover::before {
-      width: 10px;
+    /* Surgery Info */
+
+    .surgery-info{
+      margin-top:80px;
+      background:#f8f9fa;
+      padding:40px;
+      border-radius:15px;
+      text-align:center;
     }
 
-    .speciality-card:hover {
-      transform: translateY(-8px);
-      background: var(--brand-white);
-      box-shadow: 0 15px 35px rgba(125, 0, 141, 0.1);
-      border-color: var(--speciality-color, var(--brand-purple));
-    }
-
-    .speciality-header {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-
-    .speciality-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      color: white;
-      flex-shrink: 0;
-      transition: transform 0.3s ease;
-    }
-
-    .speciality-card:hover .speciality-icon {
-      transform: scale(1.1);
-    }
-
-    .speciality-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: #333;
-      margin: 0;
-    }
-
-    .speciality-description {
-      color: #666;
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
-
-    .speciality-btn {
-      background: none;
-      border: none;
-      color: var(--brand-orange);
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 15px;
-      transition: 0.3s ease;
-    }
-
-    .speciality-btn:hover {
-      color: var(--brand-purple);
-    }
-
-    @media (max-width: 768px) {
-      .surgeries-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .specialities-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .surgeries-grid {
-        grid-template-columns: 1fr;
-        max-width: 250px;
-        margin: auto;
-      }
+    .surgery-info h3{
+      color:var(--brand-purple);
+      margin-bottom:10px;
     }
 
     `;
+
     document.head.appendChild(style);
-  }, []);
 
-  return (
+  },[]);
+
+  return(
+
     <section className="surgeries">
+
       <div className="container">
-        {/* Surgeries Section */}
-        <div className="surgeries-section">
-          <h2 className="section-title">DR CURE surgeries</h2>
-          <p className="section-subtitle">
-            Advanced surgical treatments with minimal invasion and faster recovery
-          </p>
 
-          <div className="surgeries-grid">
-            {visibleSurgeries.map((surgery) => (
+        <h2 className="section-title">
+          DR CURE Surgeries
+        </h2>
+
+        <p className="section-subtitle">
+          Advanced surgical treatments with minimal invasion and faster recovery
+        </p>
+
+        {/* AUTO SCROLL SURGERY CARDS */}
+
+        <div className="surgeries-scroll">
+
+          <div className="surgeries-track">
+
+            {[...visibleSurgeries,...visibleSurgeries].map((surgery,index)=>(
+
               <div
-                key={surgery.id}
+                key={index}
                 className="surgery-card"
-                onClick={() => handleSurgeryClick(surgery)}
+                onClick={()=>handleSurgeryClick(surgery)}
               >
-                <div className="surgery-icon">{surgery.icon}</div>
-                <h3 className="surgery-name">{surgery.name}</h3>
-                <span className="surgery-category">{surgery.category}</span>
-              </div>
-            ))}
-          </div>
 
-          <div className="view-more-container">
-            <button className="view-more-btn" onClick={handleViewMore}>
-              {showAllSurgeries ? "View Less" : "View More"} →
-            </button>
-          </div>
-        </div>
-
-        {/* Specialities Section */}
-        <div className="specialities-section">
-          <h2 className="section-title">Our DR CURE Specialities</h2>
-          <p className="section-subtitle">
-            Comprehensive medical care across various specializations
-          </p>
-
-          <div className="specialities-grid">
-            {specialities.map((speciality) => (
-              <div
-                key={speciality.id}
-                className="speciality-card"
-                style={{ "--speciality-color": speciality.color }}
-                onClick={handleSpecialityClick}
-              >
-                <div className="speciality-header">
-                  <div
-                    className="speciality-icon"
-                    style={{ backgroundColor: speciality.color }}
-                  >
-                    {speciality.icon}
-                  </div>
-                  <h3 className="speciality-title">
-                    {speciality.title}
-                  </h3>
+                <div className="surgery-icon">
+                  {surgery.icon}
                 </div>
-                <p className="speciality-description">
-                  {speciality.description}
-                </p>
-                <button className="speciality-btn">
-                  Learn More →
-                </button>
+
+                <h3 className="surgery-name">
+                  {surgery.name}
+                </h3>
+
+                <span className="surgery-category">
+                  {surgery.category}
+                </span>
+
               </div>
+
             ))}
+
           </div>
+
         </div>
+
+        
+
+        {/* SURGERY INFORMATION */}
+
+        {selectedSurgery && (
+
+          <div id="surgery-info" className="surgery-info">
+
+            <h3>
+              {selectedSurgery.name} Surgery
+            </h3>
+
+            <p>
+              {selectedSurgery.name} treatment at Dr Cure Surgeries uses modern
+              minimally invasive surgical techniques. Our experienced surgeons
+              ensure faster recovery, minimal pain and excellent patient care.
+            </p>
+
+            <p>
+              Our hospitals are equipped with advanced medical technology
+              and highly qualified doctors who provide safe and effective
+              treatment for patients.
+            </p>
+
+          </div>
+
+        )}
+
       </div>
+
     </section>
+
   );
+
 };
 
 export default Surgeries;

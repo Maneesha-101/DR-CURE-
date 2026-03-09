@@ -1,7 +1,8 @@
-// src/components/Services.jsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const Services = () => {
+
+  const [selectedService, setSelectedService] = useState(null);
 
   const medicalServices = [
     { id: 1, name: 'Proctology', icon: '🩺', description: 'Specialized treatment for rectal and anal disorders' },
@@ -15,6 +16,22 @@ const Services = () => {
     { id: 9, name: 'Orthopedics', icon: '🦴', description: 'Bone and joint treatments' },
     { id: 10, name: 'Weight Loss', icon: '⚖️', description: 'Weight management programs' }
   ];
+
+  const handleLearnMore = (service) => {
+
+    setSelectedService(service);
+
+    setTimeout(() => {
+
+      const section = document.getElementById("service-info");
+
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+
+    }, 100);
+
+  };
 
   useEffect(() => {
     const style = document.createElement("style");
@@ -68,13 +85,28 @@ const Services = () => {
       text-align: center;
     }
 
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    .services-scroll {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .services-track {
+      display: flex;
       gap: 30px;
+      animation: scrollServices 45s linear infinite;
+    }
+
+    .services-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes scrollServices {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     .service-card {
+      min-width: 250px;
       background: #f8f9fa;
       border-radius: 15px;
       padding: 30px 25px;
@@ -116,11 +148,6 @@ const Services = () => {
     .service-icon {
       font-size: 48px;
       margin-bottom: 20px;
-      transition: transform 0.3s ease;
-    }
-
-    .service-card:hover .service-icon {
-      transform: scale(1.1);
     }
 
     .service-name {
@@ -148,66 +175,21 @@ const Services = () => {
       padding: 8px 0;
       font-family: 'Montserrat', sans-serif;
       font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: all 0.3s ease;
     }
 
-    .service-btn:hover {
-      color: #e66e00;
-      gap: 10px;
+    /* SERVICE INFO SECTION */
+
+    .service-info {
+      margin-top: 80px;
+      background: #f8f9fa;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
     }
 
-    @media (max-width: 1200px) {
-      .services-grid {
-        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      }
-    }
-
-    @media (max-width: 768px) {
-      .section-title {
-        font-size: 32px;
-      }
-
-      .services-intro {
-        font-size: 16px;
-        margin-bottom: 40px;
-      }
-
-      .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-      }
-
-      .service-card {
-        padding: 25px 20px;
-      }
-
-      .service-icon {
-        font-size: 40px;
-      }
-
-      .service-name {
-        font-size: 20px;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .services-grid {
-        grid-template-columns: 1fr;
-        max-width: 350px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .section-title {
-        font-size: 28px;
-      }
-
-      .services-intro {
-        font-size: 14px;
-      }
+    .service-info h3 {
+      color: var(--brand-purple);
+      margin-bottom: 10px;
     }
 
     `;
@@ -215,28 +197,68 @@ const Services = () => {
   }, []);
 
   return (
-    <section className="services">
+    <section id="services" className="services">
       <div className="container">
+
         <h2 className="section-title">Our Medical Services</h2>
 
         <p className="services-intro">
           Comprehensive healthcare services with cutting-edge technology and expert care
         </p>
 
-        <div className="services-grid">
-          {medicalServices.map((service, index) => (
-            <div
-              key={service.id}
-              className="service-card"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="service-icon">{service.icon}</div>
-              <h3 className="service-name">{service.name}</h3>
-              <p className="service-description">{service.description}</p>
-              <button className="service-btn">Learn More →</button>
-            </div>
-          ))}
+        <div className="services-scroll">
+
+          <div className="services-track">
+
+            {[...medicalServices, ...medicalServices].map((service, index) => (
+
+              <div key={index} className="service-card">
+
+                <div className="service-icon">{service.icon}</div>
+
+                <h3 className="service-name">{service.name}</h3>
+
+                <p className="service-description">{service.description}</p>
+
+                <button
+                  className="service-btn"
+                  onClick={() => handleLearnMore(service)}
+                >
+                  Learn More →
+                </button>
+
+              </div>
+
+            ))}
+
+          </div>
+
         </div>
+
+        {/* SERVICE INFO */}
+
+        {selectedService && (
+
+          <div id="service-info" className="service-info">
+
+            <h3>{selectedService.name}</h3>
+
+            <p>
+              {selectedService.name} services at Dr Cure Surgeries are provided
+              using advanced medical technology and highly experienced doctors.
+              Our goal is to ensure safe treatment, faster recovery, and
+              excellent patient care.
+            </p>
+
+            <p>
+              Our specialists carefully diagnose each patient and recommend
+              personalized treatment plans for the best medical outcomes.
+            </p>
+
+          </div>
+
+        )}
+
       </div>
     </section>
   );

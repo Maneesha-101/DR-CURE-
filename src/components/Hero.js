@@ -553,10 +553,10 @@ const Hero = () => {
       <div className="hero-container">
 
         <div className="hero-content">
-          <div className="breadcrumb">Home → Piles</div>
+          <div className="breadcrumb">Home </div>
 
           <h1 className="hero-title">
-            Piles Treatment at DR CURE
+             Where Surgery Meets Care — DR CURE 
           </h1>
 
           <h2 className="hero-subtitle">
@@ -564,10 +564,9 @@ const Hero = () => {
           </h2>
 
           <p className="hero-description">
-            These are a common yet often overlooked condition caused by swollen
-            rectal tissues and veins. At DR Cure, we offer advanced, painless
-            treatment with cutting-edge technology. Get expert care and lasting
-            relief - book your consultation today.
+            At DR CURE Surgeries, we believe that successful treatment comes from a perfect combination of advanced surgical expertise and compassionate patient care. Our experienced doctors use modern medical technology and minimally invasive techniques to provide safe, effective, and comfortable treatment.
+
+From diagnosis to recovery, our team ensures that every patient receives personalized attention, expert guidance, and the highest standard of healthcare.
           </p>
 
           <div className="hero-actions">

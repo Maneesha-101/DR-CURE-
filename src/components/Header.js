@@ -1,4 +1,5 @@
 
+
 // import React, { useState, useEffect, useRef } from "react";
 // import Logo from "../assets/Logo.jpg";
 
@@ -7,6 +8,9 @@
 //   const [searchQuery, setSearchQuery] = useState("");
 //   const [searchResults, setSearchResults] = useState([]);
 //   const [showResults, setShowResults] = useState(false);
+
+//   /* ADDED FOR MOBILE MENU */
+//   const [menuOpen, setMenuOpen] = useState(false);
 
 //   const searchRef = useRef(null);
 
@@ -80,6 +84,8 @@
 
 //     }
 
+//     setMenuOpen(false);
+
 //   };
 
 //   const bookAppointment = () => {
@@ -107,6 +113,8 @@
 
 // <style>{`
 
+// @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
 // :root{
 // --brand-purple:#7D008D;
 // --brand-orange:#FF7A00;
@@ -119,37 +127,41 @@
 // background:white;
 // z-index:1000;
 // box-shadow:0 2px 10px rgba(0,0,0,0.1);
+// font-family:'Montserrat',sans-serif;
 // }
 
 // .container{
 // max-width:1200px;
 // margin:auto;
-// padding:0 20px;
+// padding:0 15px;
 // }
 
 // .header-main{
 // display:flex;
 // align-items:center;
 // justify-content:space-between;
-// padding:12px 0;
+// padding:0px 0;
 // }
 
 // .logo{
 // display:flex;
 // align-items:center;
 // gap:10px;
-// font-size:22px;
-// font-weight:bold;
+// font-size:24px;
+// font-weight:700;
+// letter-spacing:1px;
 // }
 
 // .logo img{
-// width:40px;
-// height:40px;
+// width:100px;
+// height:100px;
 // object-fit:contain;
 // }
 
 // .logo span{
 // color:var(--brand-orange);
+// font-weight:600;
+// margin-left:5px;
 // }
 
 // .search-section{
@@ -186,7 +198,7 @@
 // }
 
 // .search-item{
-// padding:10px;
+// padding:5px;
 // cursor:pointer;
 // }
 
@@ -201,6 +213,7 @@
 // border:none;
 // padding:10px 14px;
 // border-radius:6px;
+// font-weight:600;
 // }
 
 // .navbar{
@@ -220,6 +233,44 @@
 // border:none;
 // cursor:pointer;
 // font-size:15px;
+// font-weight:600;
+// }
+
+// /* MOBILE MENU BUTTON */
+
+// .menu-toggle{
+// display:none;
+// font-size:26px;
+// cursor:pointer;
+// }
+
+// /* MOBILE RESPONSIVE */
+
+// @media(max-width:900px){
+
+// .search-section{
+// display:none;
+// }
+
+// .actions{
+// display:none;
+// }
+
+// .menu-toggle{
+// display:block;
+// }
+
+// .navbar{
+// display:${menuOpen ? "block" : "none"};
+// }
+
+// .nav-links{
+// flex-direction:column;
+// align-items:center;
+// gap:15px;
+// padding:20px 0;
+// }
+
 // }
 
 // `}</style>
@@ -231,6 +282,11 @@
 // <div className="logo">
 // <img src={Logo} alt="Dr Cure Logo"/>
 // DR CURE <span>SURGERIES</span>
+// </div>
+
+// {/* MOBILE HAMBURGER MENU */}
+// <div className="menu-toggle" onClick={()=>setMenuOpen(!menuOpen)}>
+// ☰
 // </div>
 
 // <div className="search-section" ref={searchRef}>
@@ -297,24 +353,6 @@
 
 // export default Header;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect, useRef } from "react";
 import Logo from "../assets/Logo.jpg";
 
@@ -324,7 +362,6 @@ const Header = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
-  /* ADDED FOR MOBILE MENU */
   const [menuOpen, setMenuOpen] = useState(false);
 
   const searchRef = useRef(null);
@@ -399,7 +436,6 @@ const Header = () => {
 
     }
 
-    /* CLOSE MOBILE MENU AFTER CLICK */
     setMenuOpen(false);
 
   };
@@ -429,6 +465,8 @@ const Header = () => {
 
 <style>{`
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
 :root{
 --brand-purple:#7D008D;
 --brand-orange:#FF7A00;
@@ -441,6 +479,7 @@ width:100%;
 background:white;
 z-index:1000;
 box-shadow:0 2px 10px rgba(0,0,0,0.1);
+font-family:'Montserrat',sans-serif;
 }
 
 .container{
@@ -456,12 +495,12 @@ justify-content:space-between;
 padding:0px 0;
 }
 
+/* LOGO */
+
 .logo{
 display:flex;
 align-items:center;
-gap:10px;
-font-size:22px;
-font-weight:bold;
+gap:12px;
 }
 
 .logo img{
@@ -470,9 +509,30 @@ height:100px;
 object-fit:contain;
 }
 
-.logo span{
-color:var(--brand-orange);
+/* NEW TEXT STYLE */
+
+.logo-text{
+display:flex;
+flex-direction:column;
+line-height:1.1;
 }
+
+.logo-title{
+font-size:26px;
+font-weight:700;
+letter-spacing:1px;
+color:#000;
+}
+
+.logo-sub{
+font-size:14px;
+font-weight:600;
+color:var(--brand-orange);
+letter-spacing:2px;
+margin-top:2px;
+}
+
+/* SEARCH */
 
 .search-section{
 flex:1;
@@ -523,7 +583,10 @@ color:white;
 border:none;
 padding:10px 14px;
 border-radius:6px;
+font-weight:600;
 }
+
+/* NAVBAR */
 
 .navbar{
 border-top:1px solid #eee;
@@ -542,9 +605,10 @@ background:none;
 border:none;
 cursor:pointer;
 font-size:15px;
+font-weight:600;
 }
 
-/* MOBILE MENU BUTTON */
+/* MOBILE MENU */
 
 .menu-toggle{
 display:none;
@@ -579,6 +643,15 @@ gap:15px;
 padding:20px 0;
 }
 
+.logo img{
+width:70px;
+height:70px;
+}
+
+.logo-title{
+font-size:20px;
+}
+
 }
 
 `}</style>
@@ -588,11 +661,17 @@ padding:20px 0;
 <div className="header-main">
 
 <div className="logo">
+
 <img src={Logo} alt="Dr Cure Logo"/>
-DR CURE <span>SURGERIES</span>
+
+<div className="logo-text">
+<div className="logo-title">DR CURE</div>
+<div className="logo-sub">| SURGERIES</div>
 </div>
 
-{/* MOBILE HAMBURGER MENU */}
+</div>
+
+{/* MOBILE MENU */}
 <div className="menu-toggle" onClick={()=>setMenuOpen(!menuOpen)}>
 ☰
 </div>

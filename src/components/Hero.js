@@ -575,7 +575,7 @@ From diagnosis to recovery, our team ensures that every patient receives persona
             </button>
 
             <button className="btn btn-secondary" onClick={handleBookAppointment}>
-              Book Free Appointment
+              Book Free Consultation
             </button>
           </div>
         </div>

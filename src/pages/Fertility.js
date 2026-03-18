@@ -1,8 +1,8 @@
 import React from "react";
 
-const WeightLoss = () => {
+const Fertility = () => {
   return (
-    <section className="weight-section">
+    <section className="fertility-section">
 
       <style>{`
         :root {
@@ -15,7 +15,7 @@ const WeightLoss = () => {
           --white: #ffffff;
         }
 
-        .weight-section {
+        .fertility-section {
           background: var(--accent);
           padding: 100px 20px 60px;
           font-family: 'Poppins', sans-serif;
@@ -40,7 +40,7 @@ const WeightLoss = () => {
           font-weight: 700;
           color: var(--primary);
           line-height: 1.2;
-          max-width: 900px;
+          max-width: 800px;
         }
 
         /* Description */
@@ -48,7 +48,7 @@ const WeightLoss = () => {
           margin-top: 15px;
           font-size: 16px;
           color: var(--text-dark);
-          max-width: 850px;
+          max-width: 750px;
           line-height: 1.6;
         }
 
@@ -121,22 +121,22 @@ const WeightLoss = () => {
 
         {/* Breadcrumb */}
         <div className="breadcrumb">
-          Home » Home » Weight Loss
+          Home » Home » Fertility
         </div>
 
         {/* Title */}
         <h1 className="title">
-          Best Weight Loss Treatment in India
+          Best fertility hospital near me
         </h1>
 
         {/* Description */}
         <p className="desc">
-          Weight loss is a branch of medicine that focuses on the management and treatment of obesity and overweight conditions. Contact Pristyn Care and consult with the expert general surgeons to undergo surgical or non-surgical treatment for weight loss.
+          Fertility solutions you can trust – IVF, IUI, egg freezing, and hormonal support at HeptaCare Health. Begin your journey today.
         </p>
 
         {/* Button */}
         <button className="cta-btn">
-         📞 Call Us : +91 9493994244
+          📞 Call Us : +91 9493994244
         </button>
 
         {/* Stats */}
@@ -170,4 +170,4 @@ const WeightLoss = () => {
   );
 };
 
-export default WeightLoss;
+export default Fertility;

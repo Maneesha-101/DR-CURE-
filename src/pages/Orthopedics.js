@@ -1,8 +1,8 @@
 import React from "react";
 
-const WeightLoss = () => {
+const Orthopedics = () => {
   return (
-    <section className="weight-section">
+    <section className="ortho-section">
 
       <style>{`
         :root {
@@ -15,7 +15,7 @@ const WeightLoss = () => {
           --white: #ffffff;
         }
 
-        .weight-section {
+        .ortho-section {
           background: var(--accent);
           padding: 100px 20px 60px;
           font-family: 'Poppins', sans-serif;
@@ -121,22 +121,22 @@ const WeightLoss = () => {
 
         {/* Breadcrumb */}
         <div className="breadcrumb">
-          Home » Home » Weight Loss
+          Home » Home » Orthopedics
         </div>
 
         {/* Title */}
         <h1 className="title">
-          Best Weight Loss Treatment in India
+          Best Orthopedic Doctor - Bone Doctor Near Me
         </h1>
 
         {/* Description */}
         <p className="desc">
-          Weight loss is a branch of medicine that focuses on the management and treatment of obesity and overweight conditions. Contact Pristyn Care and consult with the expert general surgeons to undergo surgical or non-surgical treatment for weight loss.
+          Our orthopedic doctors in India specialize in minimally invasive orthopedic surgeries that allow a much smaller incision, scar and recovery time. Our orthopedic surgeons use the best quality of implant (prosthesis) and graft for orthopedic surgeries. Book free consultation with the best orthopedic doctor near you at HeptaCare.
         </p>
 
         {/* Button */}
         <button className="cta-btn">
-         📞 Call Us : +91 9493994244
+          📞 Call Us : +91 9493994244
         </button>
 
         {/* Stats */}
@@ -170,4 +170,4 @@ const WeightLoss = () => {
   );
 };
 
-export default WeightLoss;
+export default Orthopedics;

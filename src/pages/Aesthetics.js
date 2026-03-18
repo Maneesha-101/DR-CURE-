@@ -1,8 +1,8 @@
 import React from "react";
 
-const WeightLoss = () => {
+const Aesthetic = () => {
   return (
-    <section className="weight-section">
+    <section className="hero-section">
 
       <style>{`
         :root {
@@ -15,44 +15,32 @@ const WeightLoss = () => {
           --white: #ffffff;
         }
 
-        .weight-section {
+        .hero-section {
           background: var(--accent);
           padding: 100px 20px 60px;
+          text-align: left;
           font-family: 'Poppins', sans-serif;
         }
 
-        .container {
-          max-width: 1200px;
+        .hero-content {
+          max-width: 800px;
           margin: auto;
         }
 
-        /* Breadcrumb */
-        .breadcrumb {
-          font-size: 14px;
-          color: var(--primary);
-          margin-bottom: 15px;
-          font-weight: 500;
-        }
-
-        /* Title */
-        .title {
-          font-size: 48px;
+        .hero-title {
+          font-size: 44px;
           font-weight: 700;
           color: var(--primary);
-          line-height: 1.2;
-          max-width: 900px;
+          line-height: 1.3;
         }
 
-        /* Description */
-        .desc {
-          margin-top: 15px;
+        .hero-desc {
           font-size: 16px;
           color: var(--text-dark);
-          max-width: 850px;
+          margin-top: 15px;
           line-height: 1.6;
         }
 
-        /* Button */
         .cta-btn {
           margin-top: 25px;
           padding: 14px 24px;
@@ -68,9 +56,9 @@ const WeightLoss = () => {
 
         .cta-btn:hover {
           background: #e86a00;
+          transform: translateY(-2px);
         }
 
-        /* Stats Card */
         .stats-container {
           margin-top: 50px;
           background: var(--card-bg);
@@ -78,8 +66,10 @@ const WeightLoss = () => {
           padding: 35px 20px;
           display: flex;
           justify-content: space-around;
+          align-items: center;
           text-align: center;
           flex-wrap: wrap;
+          gap: 20px;
           box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
@@ -100,74 +90,59 @@ const WeightLoss = () => {
           margin-top: 5px;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-          .title {
-            font-size: 30px;
+          .hero-title {
+            font-size: 28px;
           }
 
-          .desc {
+          .hero-desc {
             font-size: 14px;
           }
 
           .stats-container {
             flex-direction: column;
-            gap: 20px;
           }
         }
       `}</style>
 
-      <div className="container">
-
-        {/* Breadcrumb */}
-        <div className="breadcrumb">
-          Home » Home » Weight Loss
-        </div>
-
-        {/* Title */}
-        <h1 className="title">
-          Best Weight Loss Treatment in India
+      <div className="hero-content">
+        <h1 className="hero-title">
+          Expert laser aesthetic doctor for dark spots
         </h1>
 
-        {/* Description */}
-        <p className="desc">
-          Weight loss is a branch of medicine that focuses on the management and treatment of obesity and overweight conditions. Contact Pristyn Care and consult with the expert general surgeons to undergo surgical or non-surgical treatment for weight loss.
+        <p className="hero-desc">
+          Get advanced treatment from the best plastic surgeons. Visit HeptaCare Health to undergo advanced and minimally invasive cosmetic procedures at cost-effective prices. Enhance your physical appearance and get treatment for medical conditions that affect the aesthetics.
         </p>
 
-        {/* Button */}
         <button className="cta-btn">
-         📞 Call Us : +91 9493994244
+          📞 Call Us : +91 9493994244
         </button>
+      </div>
 
-        {/* Stats */}
-        <div className="stats-container">
-
-          <div className="stat-box">
-            <h2 className="stat-number">70k+</h2>
-            <p className="stat-text">Happy Patients</p>
-          </div>
-
-          <div className="stat-box">
-            <h2 className="stat-number">50+</h2>
-            <p className="stat-text">Disease</p>
-          </div>
-
-          <div className="stat-box">
-            <h2 className="stat-number">100+</h2>
-            <p className="stat-text">Hospitals</p>
-          </div>
-
-          <div className="stat-box">
-            <h2 className="stat-number">10+</h2>
-            <p className="stat-text">Cities</p>
-          </div>
-
+      <div className="stats-container">
+        <div className="stat-box">
+          <h2 className="stat-number">70k+</h2>
+          <p className="stat-text">Happy Patients</p>
         </div>
 
+        <div className="stat-box">
+          <h2 className="stat-number">50+</h2>
+          <p className="stat-text">Disease</p>
+        </div>
+
+        <div className="stat-box">
+          <h2 className="stat-number">100+</h2>
+          <p className="stat-text">Hospitals</p>
+        </div>
+
+        <div className="stat-box">
+          <h2 className="stat-number">10+</h2>
+          <p className="stat-text">Cities</p>
+        </div>
       </div>
 
     </section>
   );
 };
 
-export default WeightLoss;
+export default Aesthetic;

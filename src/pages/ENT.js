@@ -1,8 +1,8 @@
 import React from "react";
 
-const WeightLoss = () => {
+const ENT = () => {
   return (
-    <section className="weight-section">
+    <section className="ent-section">
 
       <style>{`
         :root {
@@ -15,7 +15,7 @@ const WeightLoss = () => {
           --white: #ffffff;
         }
 
-        .weight-section {
+        .ent-section {
           background: var(--accent);
           padding: 100px 20px 60px;
           font-family: 'Poppins', sans-serif;
@@ -35,20 +35,20 @@ const WeightLoss = () => {
         }
 
         /* Title */
-        .title {
+        .ent-title {
           font-size: 48px;
           font-weight: 700;
           color: var(--primary);
           line-height: 1.2;
-          max-width: 900px;
+          max-width: 800px;
         }
 
         /* Description */
-        .desc {
+        .ent-desc {
           margin-top: 15px;
           font-size: 16px;
           color: var(--text-dark);
-          max-width: 850px;
+          max-width: 750px;
           line-height: 1.6;
         }
 
@@ -102,11 +102,11 @@ const WeightLoss = () => {
 
         /* Responsive */
         @media (max-width: 768px) {
-          .title {
+          .ent-title {
             font-size: 30px;
           }
 
-          .desc {
+          .ent-desc {
             font-size: 14px;
           }
 
@@ -121,22 +121,22 @@ const WeightLoss = () => {
 
         {/* Breadcrumb */}
         <div className="breadcrumb">
-          Home » Home » Weight Loss
+          Home » Home » ENT
         </div>
 
         {/* Title */}
-        <h1 className="title">
-          Best Weight Loss Treatment in India
+        <h1 className="ent-title">
+          Specialized Doctor & Clinics for ENT Treatments
         </h1>
 
         {/* Description */}
-        <p className="desc">
-          Weight loss is a branch of medicine that focuses on the management and treatment of obesity and overweight conditions. Contact Pristyn Care and consult with the expert general surgeons to undergo surgical or non-surgical treatment for weight loss.
+        <p className="ent-desc">
+          Most advanced treatment of various diseases and disorders related to the Ear, Nose and Throat. Visit HeptaCare Health for highly experienced ENT Doctors.
         </p>
 
         {/* Button */}
         <button className="cta-btn">
-         📞 Call Us : +91 9493994244
+       📞 Call Us : +91 9493994244
         </button>
 
         {/* Stats */}
@@ -170,4 +170,4 @@ const WeightLoss = () => {
   );
 };
 
-export default WeightLoss;
+export default ENT;

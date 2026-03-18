@@ -165,7 +165,7 @@ const Consultation = ({ onSubmit }) => {
 
 function App() {
 
-  const [consultations, setConsultations] = useState([]);
+  console.log(consultations);
 
   const handleFormSubmit = (data) => {
     const newConsultation = {

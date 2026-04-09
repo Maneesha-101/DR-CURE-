@@ -15,18 +15,11 @@ const ConsultationForm = ({ onSubmit }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const cities = [
-    'Select City',
-    'New York',
-    'Los Angeles',
-    'Chicago',
-    'Houston',
-    'Phoenix',
-    'Philadelphia',
-    'San Antonio',
-    'San Diego',
-    'Dallas'
-  ];
-
+  'Select City',
+  'Hyderabad',
+  'Visakhapatnam',
+  'Vijayawada'
+];
   const diseases = [
     'Select Disease',
     'Piles',

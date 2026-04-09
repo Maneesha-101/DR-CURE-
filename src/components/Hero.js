@@ -1,546 +1,202 @@
-// // src/components/Hero.jsx
-// import React, { useEffect } from "react";
-
-// const Hero = () => {
-
-//   const stats = [
-//     { number: "70k+", label: "Happy Patients" },
-//     { number: "50+", label: "Diseases" },
-//     { number: "100+", label: "Hospitals" },
-//     { number: "10+", label: "Cities" }
-//   ];
-
-//   const handleCallClick = () => {
-//     alert("9493994244");
-//   };
-
-//   const handleBookAppointment = () => {
-//     const formSection = document.querySelector(".consultation");
-//     if (formSection) {
-//       formSection.scrollIntoView({ behavior: "smooth" });
-//     }
-//   };
-
-//   // Inject CSS into page
-//   useEffect(() => {
-//     const style = document.createElement("style");
-//     style.innerHTML = `
-    
-//     :root {
-//       --brand-purple: #7D008D;
-//       --brand-orange: #FF7A00;
-//       --brand-white: #FFFFFF;
-//     }
-
-//     .hero {
-//       background: linear-gradient(135deg, #f9f0fb 0%, #ffffff 100%);
-//       min-height: 80vh;
-//       display: flex;
-//       align-items: center;
-//       padding: 80px 20px;
-//     }
-
-//     .hero-container {
-//       display: flex;
-//       align-items: center;
-//       gap: 60px;
-//       max-width: 1200px;
-//       margin: auto;
-//       width: 100%;
-//     }
-
-//     .hero-content {
-//       flex: 1;
-//     }
-
-//     .breadcrumb {
-//       color: #666;
-//       font-size: 14px;
-//       margin-bottom: 20px;
-//       font-weight: 500;
-//     }
-
-//     .hero-title {
-//       font-family: 'Montserrat', sans-serif;
-//       font-size: 48px;
-//       font-weight: 700;
-//       color: var(--brand-purple);
-//       margin-bottom: 15px;
-//       line-height: 1.2;
-//     }
-
-//     .hero-subtitle {
-//       font-family: 'Montserrat', sans-serif;
-//       font-size: 28px;
-//       color: var(--brand-orange);
-//       margin-bottom: 25px;
-//       font-weight: 600;
-//     }
-
-//     .hero-description {
-//       color: #555;
-//       font-size: 18px;
-//       line-height: 1.8;
-//       margin-bottom: 35px;
-//       max-width: 600px;
-//     }
-
-//     .hero-actions {
-//       display: flex;
-//       gap: 20px;
-//       flex-wrap: wrap;
-//     }
-
-//     .btn {
-//       padding: 14px 25px;
-//       border-radius: 8px;
-//       font-weight: 600;
-//       cursor: pointer;
-//       border: none;
-//       transition: 0.3s ease;
-//       font-size: 15px;
-//     }
-
-//     .btn-primary {
-//       background-color: var(--brand-purple);
-//       color: white;
-//     }
-
-//     .btn-primary:hover {
-//       background-color: #5e006b;
-//     }
-
-//     .btn-secondary {
-//       background-color: var(--brand-orange);
-//       color: white;
-//     }
-
-//     .btn-secondary:hover {
-//       background-color: #e56d00;
-//     }
-
-//     .hero-stats {
-//       flex: 1;
-//     }
-
-//     .stats-grid {
-//       display: grid;
-//       grid-template-columns: repeat(2, 1fr);
-//       gap: 25px;
-//     }
-
-//     .stat-card {
-//       background: white;
-//       border-radius: 15px;
-//       padding: 30px 20px;
-//       text-align: center;
-//       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-//       transition: all 0.3s ease;
-//       border: 1px solid #eaeaea;
-//       cursor: pointer;
-//     }
-
-//     .stat-card:hover {
-//       transform: translateY(-10px);
-//       box-shadow: 0 15px 40px rgba(125, 0, 141, 0.12);
-//       border-color: var(--brand-purple);
-//     }
-
-//     .stat-number {
-//       font-family: 'Montserrat', sans-serif;
-//       font-size: 40px;
-//       font-weight: 700;
-//       color: var(--brand-purple);
-//       margin-bottom: 8px;
-//     }
-
-//     .stat-label {
-//       color: #666;
-//       font-weight: 600;
-//       font-size: 16px;
-//       text-transform: uppercase;
-//       letter-spacing: 0.5px;
-//     }
-
-//     /* Responsive */
-
-//     @media (max-width: 992px) {
-//       .hero-container {
-//         flex-direction: column;
-//         text-align: center;
-//         gap: 40px;
-//       }
-
-//       .hero-title {
-//         font-size: 36px;
-//       }
-
-//       .hero-subtitle {
-//         font-size: 24px;
-//       }
-
-//       .hero-description {
-//         font-size: 16px;
-//         margin-left: auto;
-//         margin-right: auto;
-//       }
-
-//       .hero-actions {
-//         justify-content: center;
-//       }
-//     }
-
-//     @media (max-width: 768px) {
-//       .hero-title {
-//         font-size: 30px;
-//       }
-
-//       .hero-subtitle {
-//         font-size: 20px;
-//       }
-
-//       .hero-actions {
-//         flex-direction: column;
-//         align-items: center;
-//       }
-
-//       .hero-actions .btn {
-//         width: 100%;
-//         max-width: 300px;
-//       }
-
-//       .stats-grid {
-//         gap: 15px;
-//       }
-
-//       .stat-card {
-//         padding: 25px 15px;
-//       }
-
-//       .stat-number {
-//         font-size: 32px;
-//       }
-
-//       .stat-label {
-//         font-size: 14px;
-//       }
-//     }
-
-//     @media (max-width: 480px) {
-//       .hero-title {
-//         font-size: 24px;
-//       }
-
-//       .hero-subtitle {
-//         font-size: 18px;
-//       }
-
-//       .stats-grid {
-//         grid-template-columns: 1fr;
-//       }
-
-//       .stat-number {
-//         font-size: 28px;
-//       }
-//     }
-//     `;
-//     document.head.appendChild(style);
-//   }, []);
-
-//   return (
-//     <section className="hero">
-//       <div className="hero-container">
-
-//         <div className="hero-content">
-//           <div className="breadcrumb">Home → Piles</div>
-
-//           <h1 className="hero-title">
-//             Piles Treatment at DR CURE
-//           </h1>
-
-//           <h2 className="hero-subtitle">
-//             Advanced Laser Surgery & Fast Recovery
-//           </h2>
-
-//           <p className="hero-description">
-//             These are a common yet often overlooked condition caused by swollen
-//             rectal tissues and veins. At DR Cure, we offer advanced, painless
-//             treatment with cutting-edge technology. Get expert care and lasting
-//             relief - book your consultation today.
-//           </p>
-
-//           <div className="hero-actions">
-//             <button className="btn btn-primary" onClick={handleCallClick}>
-//               Call to Schedule Your Consultation
-//             </button>
-
-//             <button className="btn btn-secondary" onClick={handleBookAppointment}>
-//               Book Free Appointment
-//             </button>
-//           </div>
-//         </div>
-
-//         <div className="hero-stats">
-//           <div className="stats-grid">
-//             {stats.map((stat, index) => (
-//               <div key={index} className="stat-card">
-//                 <div className="stat-number">{stat.number}</div>
-//                 <div className="stat-label">{stat.label}</div>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default Hero;
 
 
-// src/components/Hero.jsx
+import React, { useEffect, useState } from "react";
 
-// src/components/Hero.jsx
-import React, { useEffect } from "react";
+// ✅ FIXED IMAGE IMPORT (make sure file exists in src/assets/)
+import doctorImg from "../assets/doctor.png";
 
 const Hero = () => {
 
   const stats = [
-    { number: "70k+", label: "Happy Patients" },
-    { number: "50+", label: "Diseases" },
-    { number: "100+", label: "Hospitals" },
-    { number: "10+", label: "Cities" }
+    { number: 65, label: "Doctors", suffix: "+" },
+    { number: 50, label: "Diseases", suffix: "+" },
+    { number: 10, label: "Cities", suffix: "+" }
   ];
 
+  const [counts, setCounts] = useState([0, 0, 0]);
+
   const handleCallClick = () => {
-    alert("9493994244");
+    window.location.href = "tel:+919493994244";
   };
 
   const handleBookAppointment = () => {
-    const formSection = document.querySelector(".consultation");
+    const formSection = document.querySelector("#consultation");
     if (formSection) {
       formSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
+  // 🔥 COUNT ANIMATION
+  useEffect(() => {
+    stats.forEach((stat, index) => {
+      let start = 0;
+      const end = stat.number;
+      const duration = 1500;
+      const incrementTime = 20;
+
+      const timer = setInterval(() => {
+        start += Math.ceil(end / (duration / incrementTime));
+        if (start >= end) {
+          start = end;
+          clearInterval(timer);
+        }
+
+        setCounts(prev => {
+          const updated = [...prev];
+          updated[index] = start;
+          return updated;
+        });
+
+      }, incrementTime);
+    });
+  }, []);
   useEffect(() => {
     const style = document.createElement("style");
     style.innerHTML = `
 
-    :root {
-      --brand-purple: #7D008D;
-      --brand-orange: #FF7A00;
-      --brand-white: #FFFFFF;
+    :root{
+      --brand-purple:#7D008D;
+      --brand-orange:#FF7A00;
     }
 
     .hero {
-      background: linear-gradient(135deg, #f9f0fb 0%, #ffffff 100%);
-      min-height: 80vh;
-      display: flex;
-      align-items: center;
-      padding: 80px 20px;
+      background: #f5f7fa;
+      padding: 120px 20px 80px;
     }
 
     .hero-container {
       display: flex;
       align-items: center;
-      gap: 60px;
+      justify-content: space-between;
+      gap: 20px;
       max-width: 1200px;
       margin: auto;
-      width: 100%;
+      overflow: hidden;
     }
 
     .hero-content {
       flex: 1;
     }
 
-    .breadcrumb {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 50px;
-      font-weight: 500;
-    }
-
     .hero-title {
-      font-family: 'Montserrat', sans-serif;
       font-size: 48px;
       font-weight: 700;
       color: var(--brand-purple);
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       line-height: 1.2;
     }
 
-    .hero-subtitle {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 28px;
-      color: var(--brand-orange);
-      margin-bottom: 25px;
-      font-weight: 600;
-    }
-
-    .hero-description {
-      color: #555;
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 35px;
-      max-width: 600px;
-    }
-
-    .hero-actions {
+    .hero-stats {
       display: flex;
       gap: 20px;
-      flex-wrap: wrap;
+      margin-bottom: 30px;
     }
 
-    .btn {
-      padding: 14px 25px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: 0.3s ease;
-      font-size: 15px;
-    }
-
-    .btn-primary {
-      background-color: var(--brand-purple);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background-color: #5e006b;
-    }
-
-    .btn-secondary {
-      background-color: var(--brand-orange);
-      color: white;
-    }
-
-    .btn-secondary:hover {
-      background-color: #e56d00;
-    }
-
-    .hero-stats {
-      flex: 1;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 25px;
-    }
-
-    .stat-card {
+    .stat-item {
       background: white;
-      border-radius: 15px;
-      padding: 30px 20px;
+      padding: 15px 25px;
+      border-radius: 12px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      transition: all 0.3s ease;
-      border: 1px solid #eaeaea;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: 0.3s;
       cursor: pointer;
     }
 
-    .stat-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(125, 0, 141, 0.12);
-      border-color: var(--brand-purple);
+    .stat-item:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(125,0,141,0.2);
     }
 
     .stat-number {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 40px;
-      font-weight: 700;
+      font-size: 36px;
+      font-weight: 800;
       color: var(--brand-purple);
-      margin-bottom: 8px;
     }
 
     .stat-label {
-      color: #666;
-      font-weight: 600;
-      font-size: 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-size: 14px;
+      color: gray;
     }
 
-    @media (max-width: 992px) {
-      .hero-container {
-        flex-direction: column;
-        text-align: center;
-        gap: 40px;
-      }
+    .call-btn {
+      background: var(--brand-purple);
+      color: white;
+      padding: 14px 22px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
 
-      .hero-title {
-        font-size: 36px;
-      }
+    .call-btn:hover {
+      background: #5e006b;
+    }
 
-      .hero-subtitle {
-        font-size: 24px;
-      }
+    .hero-description {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 20px;
+      max-width: 500px;
+    }
 
-      .hero-description {
-        font-size: 16px;
-        margin-left: auto;
-        margin-right: auto;
-      }
+    .features p {
+      margin: 8px 0;
+      color: #444;
+      font-size: 15px;
+    }
 
-      .hero-actions {
-        justify-content: center;
-      }
+    .btn-secondary {
+      background: var(--brand-orange);
+      color: white;
+      padding: 14px 26px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .btn-secondary:hover {
+      background: #e66a00;
+    }
+
+    .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .hero-image img {
+      width: 720px;
+      animation: floatImage 4s ease-in-out infinite;
+    }
+
+    @keyframes floatImage {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
     }
 
     @media (max-width: 768px) {
+      .hero-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
       .hero-title {
         font-size: 30px;
       }
 
-      .hero-subtitle {
-        font-size: 20px;
+      .hero-stats {
+        justify-content: center;
+        flex-wrap: wrap;
       }
 
-      .hero-actions {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .hero-actions .btn {
-        width: 100%;
-        max-width: 300px;
-      }
-
-      .stats-grid {
-        gap: 15px;
-      }
-
-      .stat-card {
-        padding: 25px 15px;
-      }
-
-      .stat-number {
-        font-size: 32px;
-      }
-
-      .stat-label {
-        font-size: 14px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero-title {
-        font-size: 24px;
-      }
-
-      .hero-subtitle {
-        font-size: 18px;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .stat-number {
-        font-size: 28px;
+      .hero-image img {
+        width: 300px;
+        margin-top: 20px;
       }
     }
 
@@ -553,42 +209,56 @@ const Hero = () => {
       <div className="hero-container">
 
         <div className="hero-content">
-          <div className="breadcrumb">Home </div>
 
           <h1 className="hero-title">
-             Where Surgery Meets Care — DR CURE 
+            "care without compromise" — DR CURE
           </h1>
 
-          <h2 className="hero-subtitle">
-            Advanced Laser Surgery & Fast Recovery
-          </h2>
-
-          <p className="hero-description">
-            At DR CURE Surgeries, we believe that successful treatment comes from a perfect combination of advanced surgical expertise and compassionate patient care. Our experienced doctors use modern medical technology and minimally invasive techniques to provide safe, effective, and comfortable treatment.
-
-From diagnosis to recovery, our team ensures that every patient receives personalized attention, expert guidance, and the highest standard of healthcare.
-          </p>
-
-          <div className="hero-actions">
-            <button className="btn btn-primary" onClick={handleCallClick}>
-              Call to Schedule Your Consultation
-            </button>
-
-            <button className="btn btn-secondary" onClick={handleBookAppointment}>
-              Book Free Consultation
-            </button>
-          </div>
-        </div>
-
-        <div className="hero-stats">
-          <div className="stats-grid">
-            {stats.map((stat, index) => (
-              <div key={index} className="stat-card">
-                <div className="stat-number">{stat.number}</div>
-                <div className="stat-label">{stat.label}</div>
+          <div className="hero-stats">
+            {stats.map((stat, i) => (
+              <div key={i} className="stat-item">
+                <div className="stat-number">
+                  {counts[i]}{stat.suffix}
+                </div>
+                <div className="stat-label">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
+
+          <button className="call-btn" onClick={handleCallClick}>
+            📞 +91 9493994244
+          </button>
+
+          <p className="hero-description">
+            Advanced Laser Surgery & Fast Recovery At DR CURE Surgeries,
+            we provide safe, effective and comfortable treatment with modern technology.
+          </p>
+
+          <div className="features">
+            <p>✔ Access to Highly Experienced Specialists</p>
+            <p>✔ Complimentary Consultation with Expert Doctors</p>
+            <p>✔ Minimally Invasive Laser Treatments</p>
+            <p>✔ Hassle-Free 100% Cashless Insurance Support</p>
+          </div>
+
+          <button className="btn-secondary" onClick={handleBookAppointment}>
+            Book Free Consultation
+          </button>
+
+        </div>
+
+        {/* ✅ IMAGE FIX WITH FALLBACK */}
+        <div className="hero-image">
+          <img
+            src={doctorImg}
+            alt="doctor"
+            onError={(e) => {
+              console.error("Image not found. Check path!");
+              e.target.src = "https://via.placeholder.com/500"; // fallback image
+            }}
+          />
         </div>
 
       </div>

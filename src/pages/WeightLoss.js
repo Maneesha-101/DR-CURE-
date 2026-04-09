@@ -17,7 +17,7 @@ const WeightLoss = () => {
 
         .weight-section {
           background: var(--accent);
-          padding: 100px 20px 60px;
+          padding: 180px 20px 60px;
           font-family: 'Poppins', sans-serif;
         }
 
@@ -132,6 +132,9 @@ const WeightLoss = () => {
         {/* Description */}
         <p className="desc">
           Weight loss is a branch of medicine that focuses on the management and treatment of obesity and overweight conditions. Contact Pristyn Care and consult with the expert general surgeons to undergo surgical or non-surgical treatment for weight loss.
+          Weight loss programs and procedures at Dr Cure Surgeries involve a combination of advanced treatment, diet modification, behavior analysis post-treatment, medications, and other interventions as necessary. Dr Cure Surgeries specializes in surgical treatment for weight loss (Bariatric Surgery – surgery that helps people with obesity lose weight by altering their digestive system) and non-surgical treatment for weight loss (Gastric Balloon Program – a scientifically proven way to lose weight by just swallowing a capsule that inflates into a balloon).
+
+Weight loss specialists at Dr Cure Surgeries, such as bariatric physicians, dietitians, and other healthcare professionals, work together to provide personalized care to individuals with weight management issues. They do not just provide the treatment, but also monitor the progress, adjust the treatment plans as and when necessary, and provide ongoing support to help individuals maintain a healthy weight and improve their overall health.
         </p>
 
         {/* Button */}
